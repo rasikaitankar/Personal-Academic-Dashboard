@@ -26,7 +26,7 @@ router.get('/hello', (req, res) => {
 
 // 👉 Get all notes
 router.get('/about', (req, res) => {
-  db.all(`SELECT name, note FROM usernotes`, [], (err, rows) => {
+  db.all(`SELECT name, note FROM notes`, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json({ notes: rows });
   });
@@ -35,7 +35,7 @@ router.get('/about', (req, res) => {
 // 👉 Add new note
 router.post('/notes', (req, res) => {
   const { name, note } = req.body;
-  db.run(`INSERT INTO usernotes (name, note) VALUES (?, ?)`, [name, note], function (err) {
+  db.run(`INSERT INTO notes (name, note) VALUES (?, ?)`, [name, note], function (err) {
     if (err) return res.status(500).json({ success: false, error: err.message });
     res.json({ success: true, id: this.lastID });
   });

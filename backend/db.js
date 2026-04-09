@@ -15,10 +15,10 @@ db.serialize(() => {
     password TEXT NOT NULL
   )`);
 
-  db.run(`CREATE TABLE IF NOT EXISTS usernotes (
+  db.run(`CREATE TABLE IF NOT EXISTS notes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    note TEXT NOT NULL
+    name TEXT,
+    note TEXT
   )`);
 
  db.run(`CREATE TABLE IF NOT EXISTS reminders (

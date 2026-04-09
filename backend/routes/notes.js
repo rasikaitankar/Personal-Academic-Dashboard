@@ -9,7 +9,7 @@ router.post('/notes', (req, res) => {
     return res.status(400).json({ error: 'Name and notes are required' });
   }
 
-  db.run(`INSERT INTO usernotes (name, notes) VALUES (?, ?)`, [name, notes], function(err) {
+  db.run(`INSERT INTO notes (name, notes) VALUES (?, ?)`, [name, notes], function(err) {
     if (err) {
       return res.status(500).json({ error: 'Failed to save note' });
     }
