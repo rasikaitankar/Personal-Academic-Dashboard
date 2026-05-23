@@ -10,12 +10,10 @@ app.use(express.json());
 
 // Routes
 const helloRoute = require('./routes/hello');
-const notesRoute = require('./routes/notes');
 const userRoutes = require('./routes/user'); // LOGIN route
 
 // Use routes
 app.use('/api', helloRoute);
-app.use('/api', notesRoute);
 app.use('/api', userRoutes); // ✅ THIS FIXES LOGIN
 
 // Start server

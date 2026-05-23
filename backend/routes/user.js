@@ -26,7 +26,15 @@ router.get('/hello', (req, res) => {
 
 // 👉 Get all notes
 router.get('/about', (req, res) => {
-  db.all(`SELECT name, note FROM notes`, [], (err, rows) => {
+  db.all(`SELECT id, name, note FROM notes`, [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ notes: rows });
+  });
+});
+
+// 👉 Get notes list
+router.get('/notes', (req, res) => {
+  db.all(`SELECT id, name, note FROM notes`, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json({ notes: rows });
   });
@@ -35,9 +43,36 @@ router.get('/about', (req, res) => {
 // 👉 Add new note
 router.post('/notes', (req, res) => {
   const { name, note } = req.body;
+  if (!name || !note) return res.status(400).json({ success: false, error: 'Missing name or note' });
+
   db.run(`INSERT INTO notes (name, note) VALUES (?, ?)`, [name, note], function (err) {
     if (err) return res.status(500).json({ success: false, error: err.message });
     res.json({ success: true, id: this.lastID });
+  });
+});
+
+// 👉 Update note
+router.put('/notes/:id', (req, res) => {
+  const { id } = req.params;
+  const { note } = req.body;
+
+  if (!note) return res.status(400).json({ success: false, error: 'Note content is required' });
+
+  db.run(`UPDATE notes SET note = ? WHERE id = ?`, [note, id], function (err) {
+    if (err) return res.status(500).json({ success: false, error: err.message });
+    if (this.changes === 0) return res.status(404).json({ success: false, error: 'Note not found' });
+    res.json({ success: true });
+  });
+});
+
+// 👉 Delete note
+router.delete('/notes/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.run(`DELETE FROM notes WHERE id = ?`, [id], function (err) {
+    if (err) return res.status(500).json({ success: false, error: err.message });
+    if (this.changes === 0) return res.status(404).json({ success: false, error: 'Note not found' });
+    res.json({ success: true });
   });
 });
 

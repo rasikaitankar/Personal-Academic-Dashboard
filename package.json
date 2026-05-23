@@ -1,4 +1,8 @@
 {
+  "private": true,
+  "scripts": {
+    "start:frontend": "cd frontend && npm run dev"
+  },
   "dependencies": {
     "better-sqlite3": "^11.10.0",
     "class-variance-authority": "^0.7.1",

@@ -10,11 +10,9 @@ app.use(express.json());
 
 // Routes
 const userRoutes = require('./routes/user');
-const notesRoute = require('./routes/notes');
 const helloRoute = require('./routes/hello');
 
 app.use('/api', userRoutes);
-app.use('/api', notesRoute);
 app.use('/api', helloRoute);
 
 // ✅ THIS MUST EXIST
