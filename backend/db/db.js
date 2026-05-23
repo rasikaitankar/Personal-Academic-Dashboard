@@ -17,8 +17,9 @@ db.serialize(() => {
 
   db.run(`CREATE TABLE IF NOT EXISTS notes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEX,
-    note TEXT
+    name TEXT,
+    note TEXT,
+    datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )`);
 
  db.run(`CREATE TABLE IF NOT EXISTS reminders (
